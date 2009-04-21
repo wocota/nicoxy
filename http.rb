@@ -3,16 +3,19 @@ require 'uri'
 
 class HttpHeader < String
   def [](key)
-    self.scan(/^([A-Za-z0-9_\-]+):\s*(.*?)\s*\r?\n/om) do
-      field, value = $1, $2
-      return value if field == key
-    end
+    return $1 if self.scan(/^#{key.strip}:\s*(.*?)\s*\r?\n/)
     nil
   end
   def []=(key, str)
-    if not self.gsub!(/^#{key}:\s*(.*?)\s*\r?\n/om, "#{key}: #{str}\r\n")
+    key.strip!; str.strip!
+    if not self.gsub!(/^#{key}:\s*.*?\s*\r?\n/, "#{key}: #{str}\r\n")
       self << "#{key}: #{str}\r\n"
     end
+    str
+  end
+  def delete(key)
+    return $1 if self.gsub!(/^#{key.strip}:\s*(.*?)\s*\r?\n/, '')
+    nil
   end
 end
 

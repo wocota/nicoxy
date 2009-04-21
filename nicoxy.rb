@@ -2,6 +2,7 @@
 require './proxy'
 require 'yaml'
 
+
 config = YAML.load( open('config.yaml') )
 
 conf = {
