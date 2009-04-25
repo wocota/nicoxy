@@ -6,9 +6,11 @@ require 'yaml'
 config = YAML.load( open('config.yaml') )
 
 conf = {
-  :port => config['listen_port'] || 8080,
+  :port => config['port'] || 8080,
   :cache_folder => config['cache_folder'] || './cache',
-  :ng_word_file => config['ng_word_file'] || './NGword.txt'
+  :local_folder => config['local_folder'] || './local',
+  :ng_word_file => config['ng_word_file'] || './NGword.txt',
+  :flv_wrapper  => config['flv_wrapper'] || false
 }
 
 nicoxy = Proxy.new(conf)

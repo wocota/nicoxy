@@ -1,3 +1,5 @@
 port: 8080
 cache_folder: ./cache
+local_folder: ./local
 ng_word_file: ./NGword.txt
+flv_wrapper: true
