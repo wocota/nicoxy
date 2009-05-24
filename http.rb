@@ -103,10 +103,13 @@ class HttpResponse
     end
     @header
   end
+  def header= (str)
+    @header = str.to_s
+  end
   def body
     if not defined?(@body)
       @body = ''
-      if status.to_i == 304
+      if status.to_i == 304 or status.to_i == 303
       elsif body_len = header['Content-Length']
         total_len, max_len = 0, body_len.to_i
         while total_len < max_len and l = @socket.readpartial(4096)
@@ -131,7 +134,7 @@ class HttpResponse
     @body = str.to_s
   end
   def parse_response_line
-    if header =~ /\AHTTP\/(\d+\.\d+)\s+(\d+)/mo
+    if header =~ /\AHTTP\/(\d\.\d)\s+(\d+)/mo
       @http_version, @status = ($1 ? $1 : "0.9"), $2
     end
   end
